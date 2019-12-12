@@ -1,0 +1,139 @@
+#include <LiquidCrystal.h>  
+ LiquidCrystal lcd(12, 10, 5, 4, 3, 2);  
+
+ //arrays for robot eyes on lcd
+byte eye1[8] = {
+  B00011,
+  B00110,
+  B01000,
+  B00000,
+  B00011,
+  B00111,
+  B01111,
+  B01111,
+};
+byte eye2[8] = {
+  B11000,
+  B01100,
+  B00010,
+  B00000,
+  B11000,
+  B11100,
+  B11110,
+  B11110,
+};
+byte eye3[8] = {
+  B01111,
+  B01111,
+  B01111,
+  B00111,
+  B00011,
+  B00000,
+  B00000,
+  B00000,
+};
+byte eye4[8] = {
+  B11110,
+  B11110,
+  B11110,
+  B11100,
+  B11000,
+  B00000,
+  B00000,
+  B00000,
+};
+byte blink1[8] = {
+  B00011,
+  B00110,
+  B01000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+byte blink2[8] = {
+  B11000,
+  B01100,
+  B00010,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+byte blink3[8] = {
+  B11111,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+byte blink4[8] = {
+  B11111,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+
+int blinktimer = random(3000, 7500);
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(13, OUTPUT);
+  pinMode(7, OUTPUT);
+  digitalWrite(13, HIGH);
+  digitalWrite(7, HIGH);
+  //sets up number of columns and rows on lcd
+  analogWrite(6,100);
+  lcd.begin(16, 2);
+  
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  lcd.createChar(1, eye1);
+  lcd.createChar(2, eye2);
+  lcd.createChar(3, eye3);
+  lcd.createChar(4, eye4);
+  lcd.setCursor(0, 0);
+  lcd.print ("  ");
+  lcd.write(byte(1));
+  lcd.write(byte(2));
+  lcd.print("        ");
+  lcd.write(byte(1));
+  lcd.write(byte(2));
+  lcd.setCursor(0, 1);
+  lcd.print ("  ");
+  lcd.write(byte(3));
+  lcd.write(byte(4));
+  lcd.print("        ");
+  lcd.write(byte(3));
+  lcd.write(byte(4));
+  delay(blinktimer);
+  lcd.createChar(1, blink1);
+  lcd.createChar(2, blink2);
+  lcd.createChar(3, blink3);
+  lcd.createChar(4, blink4);
+  lcd.setCursor(0, 0);
+  lcd.print ("  ");
+  lcd.write(byte(1));
+  lcd.write(byte(2));
+  lcd.print("        ");
+  lcd.write(byte(1));
+  lcd.write(byte(2));
+  lcd.setCursor(0, 1);
+  lcd.print ("  ");
+  lcd.write(byte(3));
+  lcd.write(byte(4));
+  lcd.print("        ");
+  lcd.write(byte(3));
+  lcd.write(byte(4));
+  delay(250);
+}
