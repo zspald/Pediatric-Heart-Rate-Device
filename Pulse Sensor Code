@@ -1,0 +1,248 @@
+#define USE_ARDUINO_INTERRUPTS true    // Set-up low-level interrupts for most acurate BPM math.
+#include <PulseSensorPlayground.h>     // Includes the PulseSensorPlayground Library.   
+
+#include <LiquidCrystal.h>  
+ LiquidCrystal lcd(12, 10, 5, 4, 3, 2);
+ 
+PulseSensorPlayground pulseSensor;  // Creates an instance of the PulseSensorPlayground object called "pulseSensor"
+//arrays for heart 1 on lcd
+byte heart11[8] = {
+  B00000,
+  B00000,
+  B00111,
+  B01000,
+  B11000,
+  B10000,
+  B10000,
+  B01000,
+};
+byte heart12[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B10001,
+  B10001,
+  B01110,
+  B00100,
+  B00000,
+};
+byte heart13[8] = {
+  B00000,
+  B00000,
+  B11100,
+  B00010,
+  B00011,
+  B00001,
+  B00001,
+  B00010,
+};
+byte heart14[8] = {
+  B00100,
+  B00010,
+  B00001,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+byte heart15[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B10001,
+  B01010,
+  B00100,
+  B00000,
+  B00000,
+};
+byte heart16[8] = {
+  B00100,
+  B01000,
+  B10000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+
+//arrays for heart 2 on lcd
+byte heart21[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00011,
+  B00100,
+  B00100,
+  B00010,
+};
+byte heart22[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B10001,
+  B01010,
+  B00100,
+};
+byte heart23[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B11000,
+  B00100,
+  B00100,
+  B01000,
+};
+byte heart24[8] = {
+  B00001,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+byte heart25[8] = {
+  B00000,
+  B10001,
+  B01010,
+  B00100,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+byte heart26[8] = {
+  B10000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+byte clear1[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+
+int PulseSensorPin = 0;
+int Threshold = 600;
+int Signal;
+
+void setup() {
+  // put your setup code here, to run once:
+pinMode(13, OUTPUT);
+pinMode(7, OUTPUT);
+digitalWrite(13, HIGH);
+digitalWrite(7, HIGH);
+
+analogWrite(6,100);
+  lcd.begin(16, 2);
+
+Serial.begin(9600);
+
+pulseSensor.analogInput(PulseSensorPin);   
+pulseSensor.setThreshold(Threshold);
+if (pulseSensor.begin()) {
+    Serial.println("We created a pulseSensor Object !");  //This prints one time at Arduino power-up,  or on Arduino reset.  
+  }
+
+}
+
+void loop() {
+Signal = analogRead(PulseSensorPin);
+Serial.println(Signal);
+int myBPM = pulseSensor.getBeatsPerMinute();
+if (pulseSensor.sawStartOfBeat()) {
+ lcd.createChar(0, clear1);
+ lcd.createChar(1, heart11);
+ lcd.createChar(2, heart12);
+ lcd.createChar(3, heart13);
+ lcd.createChar(4, heart14);
+ lcd.createChar(5, heart15);
+ lcd.createChar(6, heart16);
+ lcd.setCursor(0, 0);
+ lcd.write(byte(1));
+ lcd.write(byte(2));
+ lcd.write(byte(3));
+ if (myBPM < 100) {
+   lcd.print(" BPM: ");
+   lcd.print(myBPM);
+   lcd.print(" ");
+   lcd.write(byte(1));
+   lcd.write(byte(2));
+   lcd.write(byte(3));
+   lcd.write(byte(0));
+ }
+ if (myBPM >= 100) {
+   lcd.print(" BPM: ");
+   lcd.print(myBPM);
+   lcd.print(" ");
+   lcd.write(byte(1));
+   lcd.write(byte(2));
+   lcd.write(byte(3));
+  }
+ lcd.setCursor(0, 1);
+ lcd.write(byte(4));
+ lcd.write(byte(5));
+ lcd.write(byte(6));
+ if (myBPM < 100) {
+   lcd.print("         ");
+   lcd.write(byte(4));
+   lcd.write(byte(5));
+   lcd.write(byte(6));
+   lcd.write(byte(0));
+ }
+ if (myBPM >= 100) {
+   lcd.print("          ");
+   lcd.write(byte(4));
+   lcd.write(byte(5));
+   lcd.write(byte(6));
+  }
+ delay(125);
+ lcd.createChar(1, heart21);
+ lcd.createChar(2, heart22);
+ lcd.createChar(3, heart23);
+ lcd.createChar(4, heart24);
+ lcd.createChar(5, heart25);
+ lcd.createChar(6, heart26);
+ lcd.setCursor(0, 0);
+ lcd.write(byte(1));
+ lcd.write(byte(2));
+ lcd.write(byte(3));
+ lcd.print(" BPM: ");
+ lcd.print(myBPM);
+ lcd.print(" ");
+ lcd.write(byte(1));
+ lcd.write(byte(2));
+ lcd.write(byte(3));
+ lcd.setCursor(0, 1);
+ lcd.write(byte(4));
+ lcd.write(byte(5));
+ lcd.write(byte(6));
+ if (myBPM < 100) {
+   lcd.print("         ");
+ }
+ if (myBPM > 100) {
+   lcd.print("          ");
+  }
+ lcd.write(byte(4));
+ lcd.write(byte(5));
+ lcd.write(byte(6));
+}
+delay(125);
+}
