@@ -2,7 +2,7 @@
 Pediatric robot toy named Pulsar used to measure heart rate through a bluetooth connected arduino and display heart rate over time on the bluetooth connected device. Made to reduce child fears and anxiety of having to undergo medical processes. Used as a final project for BE 101 at the University of Pennsylvania.
 
 # Videos
-![](videos/Pulsar_Blinking.MOV)  
+![](videos/Pulsar_Blinking.gif)  
 Pulsar's head LCD creating his blinking expression. Run through an arduino inside Pulsar's head
 
 ![](videos/Pulsar_Complete.gif)  
