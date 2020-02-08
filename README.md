@@ -5,5 +5,5 @@ Pediatric robot toy named Pulsar used to measure heart rate through a bluetooth 
 ![](videos/Pulsar_Blinking.MOV)  
 Pulsar's head LCD creating his blinking expression. Run through an arduino inside Pulsar's head
 
-![](videos/Pulsar_Complete.MOV)  
+![](videos/Pulsar_Complete.gif)  
 Pulsar's fully functional state. Pulsar takes in the users heart rate from a heart rate monitor on one of his arms, displays the current heart rate on his chest LCD, and sends the information to a figure on a device connected to Pulsar via bluetooth.
